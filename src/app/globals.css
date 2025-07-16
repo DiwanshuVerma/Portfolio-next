@@ -3,7 +3,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --color-bgPrimary: rgb(241, 241, 241);
+  --color-bgPrimary: rgb(252, 252, 252);
   --color-text-primary: rgb(0, 0, 0);
   --color-text-secondary: rgb(26, 26, 26);
   /* --color-bgPrimary: #061107; */
@@ -43,7 +43,7 @@
 }
 
 .dark {
-  --color-bgPrimary: #0e0e0e;
+  --color-bgPrimary: #050505;
   --color-text-primary: rgb(255, 255, 255);
   --color-text-secondary: rgb(214, 214, 214);
   --background: oklch(0.141 0.005 285.823);

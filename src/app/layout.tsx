@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { AppThemeProvider } from "./provider";
 import DotGrid from "@/components/DotgridBg";
+import { Footer } from "@/components/Footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -30,7 +31,7 @@ export default function RootLayout({
           {/* dots background */}
           <div className="fixed inset-0 -z-10 pointer-events-none">
             <DotGrid
-              dotSize={1}
+              dotSize={2}
               gap={15}
               baseColor="#5227FF"
               activeColor="#dc2626"
@@ -44,6 +45,7 @@ export default function RootLayout({
 
           <Navbar />
           {children}
+          <Footer />
         </AppThemeProvider>
       </body>
     </html>
