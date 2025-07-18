@@ -5,10 +5,12 @@ import { projects } from "@/data/projects"
 import { ArrowUpRight, VideoIcon } from "lucide-react"
 import { motion } from 'motion/react'
 import Image from "next/image"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useInView } from "react-intersection-observer"
 
 const Projects = () => {
+    const [expandedSkill, setExpandedSkill] = useState<{ projectIdx: number; skillIdx: number } | null>(null);
+
     const videoRef = useRef<HTMLVideoElement | null>(null)
     const [ref, inView] = useInView({
         triggerOnce: false,
@@ -30,6 +32,13 @@ const Projects = () => {
     }, [inView]);
 
 
+    const toggleSkill = (projectIdx: number, skillIdx: number) => {
+        setExpandedSkill({ projectIdx, skillIdx });
+
+        setTimeout(() => {
+            setExpandedSkill(null);
+        }, 3000);
+    };
     return (
         <Container className="min-h-screen pt-24 pb-12 px-4 md:px-10">
             <h2 className="mb-4 text-lg md:text-xl font-medium ">Proof of work</h2>
@@ -37,6 +46,7 @@ const Projects = () => {
             <div className="grid grid-cols-1 gap-8">
                 {projects.map((project, idx) => (
                     <motion.div key={idx}
+                        id={project.id}
                         ref={ref}
                         initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
                         whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
@@ -45,17 +55,8 @@ const Projects = () => {
                             delay: idx * 0.05,
                             ease: "easeInOut"
                         }}
-                        className="hover:scale-[101%] duration-300 flex flex-col gap-4 p-4 shadow-[0px_0px_4px_0px_rgba(125,125,214,0.50)] dark:shadow-[2px_2px_6px_0px_rgba(125,125,214,0.50)]  rounded"
+                        className="hover:scale-[101%] duration-300 flex flex-col gap-4 p-2 md:p-4 shadow-[0px_0px_4px_0px_rgba(125,125,214,0.50)] dark:shadow-[2px_2px_6px_0px_rgba(125,125,214,0.50)]  rounded"
                     >
-                        {/* <Image
-                            src={project.image}
-                            alt={project.name}
-                            width={700}
-                            height={700}
-                            quality={100}
-                            priority={idx === 0} // load the first image eagerly, rest lazily
-                            className="rounded object-cover hover:scale-[102%] duration-500 w-full"
-                        /> */}
 
                         <video
                             ref={videoRef}
@@ -68,18 +69,21 @@ const Projects = () => {
                         <p className="text-sm text-neutral-700 dark:text-neutral-500">{project.description}</p>
 
                         <div className="flex flex-wrap mt-2 ml-4 h-8">
-                            {project.skills.map((skill, index) => (
-                                <div
+                            {project.skills.map((skill, index) => {
+                                const isClickedSkill = expandedSkill?.projectIdx === idx && expandedSkill?.skillIdx === index
+
+                                return <div
+                                    onClick={() => toggleSkill(idx, index)}
                                     key={index}
-                                    className={`cursor-default h-fit group flex items-center gap-1 border border-neutral-300 dark:border-neutral-800 dark:bg-neutral-900 bg-neutral-200 p-2 rounded-full transition-all duration-700 -ml-4
-                                        }`}
+                                    className={`cursor-default h-fit group flex items-center border border-neutral-300 dark:border-neutral-800 dark:bg-neutral-900 bg-neutral-200 p-2 rounded-full transition-all duration-700 -ml-3
+                                                                    }`}
                                 >
                                     <Image src={skill.icon} alt={skill.name} width={20} height={20} className={`shrink-0 w-4 h-4 md:w-5 md:h-5 ${skill.name === 'Express.js' && 'dark:invert'} `} />
-                                    <span className="text-xs overflow-hidden max-w-0 group-hover:max-w-[200px] group-hover:pr-4 transition-all duration-500 whitespace-nowrap">
+                                    <span className={`text-xs overflow-hidden max-w-0 group-hover:max-w-[200px] group-hover:px-2 transition-all duration-500 whitespace-nowrap ${isClickedSkill && 'max-w-[200px] px-2'}`}>
                                         {skill.name}
                                     </span>
                                 </div>
-                            ))}
+                            })}
                         </div>
 
                         <div className="flex gap-2 md:gap-3 my-4">

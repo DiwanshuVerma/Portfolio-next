@@ -22,16 +22,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.className} relative min-h-screen antialiased bg-neutral-100 dark:bg-neutral-700`}
-        suppressHydrationWarning>
+        className={`${inter.className} relative min-h-screen antialiased bg-neutral-100 dark:bg-neutral-700`}>
         <AppThemeProvider>
 
           {/* dots background */}
           <div className="fixed inset-0 -z-10 pointer-events-none">
             <DotGrid
-              dotSize={2}
+              dotSize={1}
               gap={15}
               baseColor="#5227FF"
               activeColor="#dc2626"

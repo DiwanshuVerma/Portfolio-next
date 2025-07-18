@@ -23,7 +23,7 @@ export const Experience = () => {
                     delay: 0.3,
                     ease: "easeInOut"
                 }}
-                className="p-3 rounded shadow-[0px_0px_4px_0px_rgba(125,125,214,0.50)] dark:shadow-[2px_2px_6px_0px_rgba(125,125,214,0.50)]" >
+                className="p-3 rounded shadow-[0px_0px_4px_0px_rgba(125,125,214,0.50)] dark:shadow-[0px_0px_3px_0px_rgba(125,125,214,0.50)]" >
                 {experience.map(exp => (
                     <div className="space-y-1" key={exp.company}>
                         <div className="flex gap-2 items-center">

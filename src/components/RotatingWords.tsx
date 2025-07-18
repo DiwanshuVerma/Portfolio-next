@@ -23,7 +23,7 @@ export const RotatingWords = () => {
   }, [index]);
 
   return (
-    <div className="relative inline-block top-2 h-[1.5em] w-24 rounded text-center inset-shadow-sm inset-shadow-neutral-300 dark:inset-shadow-indigo-500 overflow-hidden px-1">
+    <div className="relative inline-block top-2 h-[1.7em] md:h-[1.5em] w-20 md:w-24 rounded text-center inset-shadow-sm inset-shadow-neutral-300 dark:inset-shadow-indigo-500 overflow-hidden px-1">
       {/* Previous word sliding down */}
       {isAnimating && (
         <div

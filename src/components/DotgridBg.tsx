@@ -288,7 +288,7 @@ const DotGrid: React.FC<DotGridProps> = ({
     ]);
 
     return (
-        <section ref={wrapperRef} className="relative h-[750px] w-full">
+        <section ref={wrapperRef} className="relative h-full w-full">
             <canvas
                 ref={canvasRef}
                 className="absolute top-0 left-0 w-full h-full"
