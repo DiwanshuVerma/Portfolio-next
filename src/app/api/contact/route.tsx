@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
 
         if (!email || !message) {
             return NextResponse.json(
-                { success: false, message: 'Missing email or message' },
+                { success: false, message: 'Missing email or message!' },
                 { status: 400 }
             )
         }
@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             return NextResponse.json(
-                { success: false, message: "Invalid email address format" },
+                { success: false, message: "Invalid email address format!" },
                 { status: 400 }
             )
         }
@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
         }
 
         return NextResponse.json(
-            { success: true, message: 'Message sent successfully!' },
+            { success: true, message: "Thank you! I’ll be in touch shortly." },
             { status: 200 }
         )
     } catch (error) {
