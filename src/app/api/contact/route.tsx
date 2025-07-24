@@ -31,8 +31,9 @@ export async function POST(req: NextRequest) {
         })
 
         if (error) {
+            console.log(error)
             return NextResponse.json(
-                { success: false, message: `Error sending email: ${error}` },
+                { success: false, message: `Error sending email: ${error.message}` },
                 { status: 500 }
             )
         }

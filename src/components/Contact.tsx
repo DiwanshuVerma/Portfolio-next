@@ -8,31 +8,44 @@ export const Contact = () => {
     const [loading, setLoading] = useState(false)
     const [email, setEmail] = useState<string>("")
     const [message, setMessage] = useState<string>("")
-    const [status, setStatus] = useState({ msg: '', sts: 400 })
+    const [status, setStatus] = useState<{ msg: string, sts: number | null }>({ msg: '', sts: null })
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
         setLoading(true)
 
         try {
-            const res = await fetch('api/contact', {
-                method: "POST",
+            const res = await fetch('/api/contact', {
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, message }),
             })
 
             const data = await res.json()
-            setStatus({ msg: data.message || "Something went wrong", sts: res.status || 400 })
-            setLoading(false)
+            console.log(data)
+            setStatus({ msg: data.message || 'Something went wrong', sts: res.status || 400 })
+
             if (res.ok) {
                 setEmail('')
                 setMessage('')
             }
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.log(error)
-            setStatus({ msg: error?.message || "Something went wrong", sts: 400 })
+            if (error instanceof Error) {
+                setStatus({ msg: error.message, sts: 400 })
+                console.log(error)
+            } else {
+                console.log(error)
+                setStatus({ msg: 'Failed to send message.', sts: 400 })
+            }
+        } finally {
+            setLoading(false)
+            setTimeout(() => {
+                setStatus({ msg: '', sts: null })
+            }, 5000)
         }
     }
+
 
     return (
         <section className="mt-10 flex justify-between w-full gap-8 flex-col-reverse sm:flex-row">
@@ -69,8 +82,8 @@ export const Contact = () => {
                     className="py-2 px-3 rounded shadow-[0px_0px_4px_0px_rgba(125,125,214,0.50)] dark:shadow-[0px_0px_3px_0px_rgba(125,125,214,0.50)]" />
 
                 <textarea
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
                     required
                     placeholder="Message"
                     className="min-h-20 py-2 px-3 rounded shadow-[0px_0px_4px_0px_rgba(125,125,214,0.50)] dark:shadow-[0px_0px_3px_0px_rgba(125,125,214,0.50)]" />

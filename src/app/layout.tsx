@@ -1,19 +1,22 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Exo_2 } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { AppThemeProvider } from "./provider";
 import DotGrid from "@/components/DotgridBg";
 import { Footer } from "@/components/Footer";
 
-const inter = Inter({
+const inter = Exo_2({
   subsets: ["latin"],
   weight: ["400", '500', '600', '700', '800', '900']
 });
 
 export const metadata: Metadata = {
-  title: "Diwanshu's Portfolio",
+  title: "Hi I'm Diwanshu",
   description: "Portfolio website of Diwanshu Verma which represents his grinds",
+  icons: {
+    icon: "/favicon.jpg",
+  },
 };
 
 export default function RootLayout({

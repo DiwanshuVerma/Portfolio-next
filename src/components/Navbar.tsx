@@ -26,7 +26,7 @@ export const Navbar = () => {
                     scrolled ? "w-[80%] md:w-[60%] lg:w-[40%] duration-500" : "w-[90%] md:w-[75%] duration-500"
                 )}
             >
-                {navItems.map((item, idx) => {
+                {navItems.map(item => {
                     const ItemWrapper = item.external ? "a" : Link
                     const itemProps = item.external
                         ? { href: item.href, target: "_blank", rel: "noopener noreferrer" }

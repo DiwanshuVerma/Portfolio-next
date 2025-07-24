@@ -6,16 +6,19 @@ import { InertiaPlugin } from "gsap/InertiaPlugin";
 
 gsap.registerPlugin(InertiaPlugin);
 
-const throttle = (func: (...args: any[]) => void, limit: number) => {
-    let lastCall = 0;
-    return function (this: any, ...args: any[]) {
-        const now = performance.now();
-        if (now - lastCall >= limit) {
-            lastCall = now;
-            func.apply(this, args);
-        }
-    };
-};
+function throttle<T extends (...args: Parameters<T>) => ReturnType<T>>(
+  func: T,
+  limit: number
+): (...args: Parameters<T>) => void {
+  let lastCall = 0;
+  return function (this: unknown, ...args: Parameters<T>) {
+    const now = performance.now();
+    if (now - lastCall >= limit) {
+      lastCall = now;
+      func.apply(this, args);
+    }
+  };
+}
 
 interface Dot {
     cx: number;
@@ -179,17 +182,28 @@ const DotGrid: React.FC<DotGridProps> = ({
     useEffect(() => {
         buildGrid();
         let ro: ResizeObserver | null = null;
+
         if ("ResizeObserver" in window) {
             ro = new ResizeObserver(buildGrid);
-            wrapperRef.current && ro.observe(wrapperRef.current);
+            if (wrapperRef.current) {
+                ro.observe(wrapperRef.current);
+            }
         } else {
-            (window as Window).addEventListener("resize", buildGrid);
+            const win = window as Window;
+            win.addEventListener("resize", buildGrid);
         }
+
         return () => {
-            if (ro) ro.disconnect();
-            else window.removeEventListener("resize", buildGrid);
+            if (ro) {
+                ro.disconnect();
+            } else {
+                const win = window as Window;
+                win.removeEventListener("resize", buildGrid);
+            }
         };
     }, [buildGrid]);
+
+
 
     useEffect(() => {
         const onMove = (e: MouseEvent) => {
@@ -269,7 +283,7 @@ const DotGrid: React.FC<DotGridProps> = ({
             }
         };
 
-        const throttledMove = throttle(onMove, 50);
+            const throttledMove = throttle(onMove, 50);
         window.addEventListener("mousemove", throttledMove, { passive: true });
         window.addEventListener("click", onClick);
 
@@ -288,16 +302,15 @@ const DotGrid: React.FC<DotGridProps> = ({
     ]);
 
     return (
-        <section ref={wrapperRef} className="relative h-full w-full">
+        <section ref={wrapperRef} className={`relative h-full w-full ${className}`} style={style}>
             <canvas
                 ref={canvasRef}
                 className="absolute top-0 left-0 w-full h-full"
             ></canvas>
-
-            {/* Fade effect at bottom */}
             <div className="absolute bottom-0 left-0 w-full dark:h-32 pointer-events-none bg-gradient-to-t from-black to-transparent" />
         </section>
     );
+
 };
 
 export default DotGrid;

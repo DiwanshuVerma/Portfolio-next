@@ -19,7 +19,7 @@ export const socials = [
         href: 'https://x.com/diwanshu_28'
     },
     {
-        name: "By Me a Coffee",
+        name: "Buy Me a Coffee",
         icon: 'icons/buymeacoffee.svg',
         hoverColor: true,
         hoverBG: "hover:bg-yellow-500",

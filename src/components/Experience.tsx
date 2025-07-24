@@ -16,18 +16,19 @@ export const Experience = () => {
             <h2 className="mb-4 text-lg md:text-xl font-medium ">Experience</h2>
 
             <motion.div
-                initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
+                initial={{ opacity: 0, filter: "blur(5px)", y: 10 }}
                 whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                viewport={{ once: true }}
                 transition={{
-                    duration: 0.3,
-                    delay: 0.3,
+                    duration: 0.1,
+                    delay: 0.1,
                     ease: "easeInOut"
                 }}
                 className="p-3 rounded shadow-[0px_0px_4px_0px_rgba(125,125,214,0.50)] dark:shadow-[0px_0px_3px_0px_rgba(125,125,214,0.50)]" >
                 {experience.map(exp => (
                     <div className="space-y-1" key={exp.company}>
                         <div className="flex gap-2 items-center">
-                            <Briefcase size={17} className="text-neutral-500"/>
+                            <Briefcase size={17} className="text-neutral-500" />
                             <h4 className="text-base md:text-lg">{exp.company}</h4>
                         </div>
                         <div className="w-full flex items-center justify-between pl-6">
