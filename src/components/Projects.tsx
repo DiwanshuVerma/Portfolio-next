@@ -49,15 +49,15 @@ const ProjectCard = memo(
   ({ project, idx, expandedSkill, toggleSkill }: ProjectCardProps) => {
     return (
       <motion.div
-        initial={{ opacity: 0, filter: 'blur(10px)', y: 10 }}
+        initial={{ opacity: 0, filter: 'blur(8px)', y: 10 }}
         whileInView={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
         viewport={{ once: true }}
         transition={{
-          duration: 0.3,
-          delay: idx * 0.05,
+          duration: 0.2,
+          delay: idx * 0.08,
           ease: 'easeInOut',
         }}
-        className="hover:scale-[101%] duration-300 flex flex-col gap-4 p-2 md:p-4 shadow-[0px_0px_4px_0px_rgba(125,125,214,0.50)] dark:shadow-[1px_1px_5px_0px_rgba(125,125,214,0.50)] rounded"
+        className="hover:scale-[101%] duration-300 flex flex-col gap-3 md:gap-4 p-2 md:p-4 shadow-[0px_0px_4px_0px_rgba(125,125,214,0.50)] dark:shadow-[1px_1px_5px_0px_rgba(125,125,214,0.50)] rounded"
       >
         <Image
           src={project.image}
@@ -65,11 +65,10 @@ const ProjectCard = memo(
           width={700}
           height={700}
           quality={100}
-          priority={idx === 0}
           className="rounded object-cover hover:scale-[102%] duration-500"
         />
         <h3 className="text-base">{project.name}</h3>
-        <p className="text-sm text-neutral-700 dark:text-neutral-300">
+        <p className="text-sm text-neutral-600 dark:text-neutral-400">
           {project.description}
         </p>
 

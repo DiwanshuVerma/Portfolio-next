@@ -8,7 +8,7 @@ export const projects = [
         description: "Track daily habits, visualize progress with insightful charts, climb the leaderboard to stay motivated",
         repo: "https://github.com/DiwanshuVerma/Growth-Board",
         demo: "/projects/#growth-board",
-        website: "https://growth-board-self.vercel.app/",
+        website: "https://growwth-board.vercel.app/",
         skills: [
             { name: "React.js", icon: "/icons/react.svg" },
             { name: "Tailwind", icon: "/icons/tailwind.svg" },
@@ -60,7 +60,7 @@ export const projects = [
         description: "Modern, Sleek, Responsive porfolio website template.",
         repo: "https://github.com/DiwanshuVerma/porfolio-next",
         demo: "/projects/#portfolio",
-        website: "https://diwanshu-projectfolio.vercel.app/",
+        website: "https://diwanshuu.vercel.app/",
         skills: [
             { name: "Next.js", icon: "/icons/nextjs.svg" },
             { name: "Tailwind", icon: "/icons/tailwind.svg" },

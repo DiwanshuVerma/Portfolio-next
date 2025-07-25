@@ -10,8 +10,9 @@ export const socials = [
         name: "Linkedin",
         icon: 'icons/linkedin.svg',
         hoverBG: "hover:bg-blue-700",
-        href: 'https://linkedin.com/diwanshu-verma'
+        href: 'https://linkedin.com/in/diwanshu-verma'
     },
+    
     {
         name: "Twitter",
         icon: 'icons/x.svg',
@@ -23,6 +24,6 @@ export const socials = [
         icon: 'icons/buymeacoffee.svg',
         hoverColor: true,
         hoverBG: "hover:bg-yellow-500",
-        href: 'https://buymeacoffee.com/diwanshu63d'
+        href: 'https://buymeacoffee.com/diwanshuu'
     },
 ]

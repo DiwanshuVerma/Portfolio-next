@@ -17,16 +17,16 @@ interface ProjectItemProps {
   onInViewChange: (index: number, inView: boolean) => void
 }
 
-const ProjectItem = ({ 
-  project, 
+const ProjectItem = ({
+  project,
   index,
   expandedSkill,
   toggleSkill,
   setVideoRef,
   onInViewChange
 }: ProjectItemProps) => {
-  const [ref] = useInView({ 
-    threshold: 0.6, 
+  const [ref] = useInView({
+    threshold: 0.6,
     triggerOnce: false,
     onChange: (inView) => onInViewChange(index, inView)
   })
@@ -36,14 +36,14 @@ const ProjectItem = ({
       key={index}
       id={project.id}
       ref={ref}
-      initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
+      initial={{ opacity: 0, filter: "blur(5px)", y: 10 }}
       whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+      viewport={{ once: true }}
       transition={{
-        duration: 0.3,
-        delay: index * 0.05,
+        duration: 0.2,
         ease: "easeInOut",
       }}
-      className="hover:scale-[101%] duration-300 flex flex-col gap-4 p-2 md:p-4 shadow-[0px_0px_4px_0px_rgba(125,125,214,0.50)] dark:shadow-[2px_2px_6px_0px_rgba(125,125,214,0.50)] rounded"
+      className="hover:scale-[101%] duration-300 flex flex-col gap-3 md:gap-4 p-2 md:p-4 shadow-[0px_0px_4px_0px_rgba(125,125,214,0.50)] dark:shadow-[2px_2px_6px_0px_rgba(125,125,214,0.50)] rounded"
     >
       <video
         ref={(el) => setVideoRef(index, el)}
@@ -58,7 +58,7 @@ const ProjectItem = ({
       </video>
 
       <h3 className="text-base">{project.name}</h3>
-      <p className="text-sm text-neutral-700 dark:text-neutral-500">{project.description}</p>
+      <p className="text-sm text-neutral-700 dark:text-neutral-400">{project.description}</p>
 
       <div className="flex flex-wrap mt-2 ml-4 h-8">
         {project.skills.map((skill, skillIdx) => {
@@ -76,7 +76,10 @@ const ProjectItem = ({
                 alt={skill.name}
                 width={20}
                 height={20}
-                className={`shrink-0 w-4 h-4 md:w-5 md:h-5 ${skill.name === 'Express.js' ? 'dark:invert' : ''}`}
+                className={`shrink-0 w-4 h-4 md:w-5 md:h-5 ${['Express.js', 'Next.js'].includes(skill.name)
+                    ? 'dark:invert'
+                    : ''
+                  }`}
               />
               <span
                 className={`text-xs overflow-hidden max-w-0 group-hover:max-w-[200px] group-hover:px-2 transition-all duration-500 whitespace-nowrap ${isClickedSkill ? 'max-w-[200px] px-2' : ''
@@ -100,7 +103,7 @@ const ProjectItem = ({
           Website
         </a>
       </div>
-    </motion.div>   
+    </motion.div>
   )
 }
 
@@ -145,7 +148,7 @@ const Projects = () => {
             }
           })
           video.play().catch((e) => console.error("Video play failed:", e))
-        }, 2000)
+        }, 1000)
       } else {
         if (currentTimeoutRefs[idx]) clearTimeout(currentTimeoutRefs[idx]!)
         if (video) {
@@ -154,7 +157,7 @@ const Projects = () => {
         }
       }
     })
-    
+
     return () => {
       currentTimeoutRefs.forEach(timeout => {
         if (timeout) clearTimeout(timeout)

@@ -7,11 +7,13 @@ import { useState } from "react"
 import { ThemeToggle } from "./ThemeToggle"
 import clsx from "clsx"
 import { navItems } from "@/data/navItems"
+import { usePathname } from "next/navigation"
 
 export const Navbar = () => {
 
     const { scrollY } = useScroll()
     const [scrolled, setScrolled] = useState(false)
+    const pathname = usePathname()
 
     useMotionValueEvent(scrollY, "change", (latest) => {
         setScrolled(latest > 20)
@@ -36,10 +38,10 @@ export const Navbar = () => {
                         <div key={item.title} className="flex items-center gap-2 py-2">
                             <ItemWrapper
                                 {...itemProps}
-                                className="group relative p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors"
+                                className={`group relative p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors ${pathname === item.href ? 'text-indigo-600' : ''}`}
                             >
                                 {item.icon}
-                                <span className="absolute hidden group-hover:block w-fit -bottom-8 dark:-bottom-10 bg-white dark:bg-black left-1/2 -translate-x-1/2 text-xs shadow-[0px_0px_4px_0px_rgba(125,125,214,0.50)] px-2 py-1 rounded text-nowrap">
+                                <span className="absolute hidden group-hover:block w-fit -bottom-8 dark:-bottom-10 bg-white text-black dark:text-white dark:bg-black left-1/2 -translate-x-1/2 text-xs shadow-[0px_0px_4px_0px_rgba(125,125,214,0.50)] px-2 py-1 rounded text-nowrap">
                                     {item.title}
                                 </span>
                             </ItemWrapper>

@@ -60,7 +60,7 @@ export const Contact = () => {
                     <div className="flex gap-3">
                         {socials.map(link => (
                             <a href={link.href} target="_blank" className={`group relative rounded p-2 border-1 border-neutral-400 dark:border-neutral-800 cursor-pointer ${link.hoverBG}`} key={link.name}>
-                                <Image src={link.icon} alt={link.name} height={17} width={17} className={`dark:invert ${link.hoverColor && 'hover:dark:invert-0 '}`} />
+                                <Image src={link.icon} alt={link.name} height={17} width={17} className={`dark:invert ${link.hoverColor && 'group-hover:dark:invert-0 '}`} />
                                 <span className="absolute hidden group-hover:block w-fit -bottom-8 left-1/2 -translate-x-1/2 text-xs shadow-[0px_0px_4px_0px_rgba(125,125,214,0.50)] px-2 py-1 rounded text-nowrap">
                                     {link.name}
                                 </span>

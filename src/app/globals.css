@@ -2,6 +2,14 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+::selection {
+  @apply bg-zinc-300;
+}
+
+.dark ::selection {
+  @apply bg-indigo-900;
+}
+
 :root {
   --color-bgPrimary: rgb(252, 252, 252);
   --color-text-primary: rgb(0, 0, 0);

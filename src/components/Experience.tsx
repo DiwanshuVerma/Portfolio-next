@@ -21,7 +21,7 @@ export const Experience = () => {
                 viewport={{ once: true }}
                 transition={{
                     duration: 0.1,
-                    delay: 0.1,
+                    delay: 0.05,
                     ease: "easeInOut"
                 }}
                 className="p-3 rounded shadow-[0px_0px_4px_0px_rgba(125,125,214,0.50)] dark:shadow-[0px_0px_3px_0px_rgba(125,125,214,0.50)]" >
@@ -31,9 +31,9 @@ export const Experience = () => {
                             <Briefcase size={17} className="text-neutral-500" />
                             <h4 className="text-base md:text-lg">{exp.company}</h4>
                         </div>
-                        <div className="w-full flex items-center justify-between pl-6">
-                            <span className="text-xs md:text-sm text-neutral-500">{exp.role}</span>
-                            <span className="text-xs md:text-sm text-neutral-500">{exp.duration}</span>
+                        <div className="w-full flex items-center justify-between pl-6 text-xs md:text-sm text-neutral-600 dark:text-neutral-400">
+                            <span>{exp.role}</span>
+                            <span>{exp.duration}</span>
                         </div>
                     </div>
                 ))}
