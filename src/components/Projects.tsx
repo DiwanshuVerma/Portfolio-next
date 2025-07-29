@@ -89,16 +89,14 @@ const ProjectCard = memo(
                   alt={skill.name}
                   width={20}
                   height={20}
-                  className={`shrink-0 w-4 h-4 md:w-5 md:h-5 ${
-                    ['Express.js', 'Next.js'].includes(skill.name)
+                  className={`shrink-0 w-4 h-4 md:w-5 md:h-5 ${['Express.js', 'Next.js'].includes(skill.name)
                       ? 'dark:invert'
                       : ''
-                  }`}
+                    }`}
                 />
                 <span
-                  className={`text-xs overflow-hidden max-w-0 group-hover:max-w-[200px] group-hover:px-2 transition-all duration-500 whitespace-nowrap ${
-                    isClickedSkill ? 'max-w-[200px] px-2' : ''
-                  }`}
+                  className={`text-xs overflow-hidden max-w-0 group-hover:max-w-[200px] group-hover:px-2 transition-all duration-500 whitespace-nowrap ${isClickedSkill ? 'max-w-[200px] px-2' : ''
+                    }`}
                 >
                   {skill.name}
                 </span>
@@ -123,13 +121,15 @@ const ProjectCard = memo(
             Repo
           </a>
 
-          <a
-            href={project.demo}
-            className="flex items-center gap-1 shadow-[0px_0px_6px_0px_rgba(125,125,214,0.50)] hover:bg-neutral-100 hover:dark:bg-neutral-950 w-fit px-4 py-1 rounded-full text-xs sm:text-sm cursor-pointer"
-          >
-            <VideoIcon size={18} />
-            Demo
-          </a>
+          {project.video && (
+            <a
+              href={project.demo}
+              className="flex items-center gap-1 shadow-[0px_0px_6px_0px_rgba(125,125,214,0.50)] hover:bg-neutral-100 hover:dark:bg-neutral-950 w-fit px-4 py-1 rounded-full text-xs sm:text-sm cursor-pointer"
+            >
+              <VideoIcon size={18} />
+              Demo
+            </a>
+          )}
 
           <a
             href={project.website}

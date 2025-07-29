@@ -5,7 +5,7 @@ import { projects } from "@/data/projects"
 import { ArrowUpRight } from "lucide-react"
 import { motion } from 'framer-motion'
 import Image from "next/image"
-import { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { useInView } from "react-intersection-observer"
 
 interface ProjectItemProps {
@@ -17,7 +17,7 @@ interface ProjectItemProps {
   onInViewChange: (index: number, inView: boolean) => void
 }
 
-const ProjectItem = ({
+const ProjectItem = React.memo(({
   project,
   index,
   expandedSkill,
@@ -26,7 +26,7 @@ const ProjectItem = ({
   onInViewChange
 }: ProjectItemProps) => {
   const [ref] = useInView({
-    threshold: 0.6,
+    threshold: 0.5,
     triggerOnce: false,
     onChange: (inView) => onInViewChange(index, inView)
   })
@@ -105,7 +105,7 @@ const ProjectItem = ({
       </div>
     </motion.div>
   )
-}
+})
 
 const Projects = () => {
   const [expandedSkill, setExpandedSkill] = useState<{ projectIdx: number; skillIdx: number } | null>(null)
@@ -186,4 +186,5 @@ const Projects = () => {
   )
 }
 
+ProjectItem.displayName = 'ProjectItem'
 export default Projects

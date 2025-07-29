@@ -3,7 +3,7 @@ export const projects = [
     {
         id: "growth-board",
         image: '/projects/images/GrowthB.png',
-        video: '/projects/videos/GB.mp4',
+        video: 'https://res.cloudinary.com/dsvsm4qdo/video/upload/q_auto,f_auto,vc_auto/v1753772703/Growth_board_yw7iwe.mp4',
         name: "Growth Board",
         description: "Track daily habits, visualize progress with insightful charts, climb the leaderboard to stay motivated",
         repo: "https://github.com/DiwanshuVerma/Growth-Board",
@@ -38,7 +38,7 @@ export const projects = [
     {
         id: "dhan",
         image: '/projects/images/Dhan.png',
-        video: '/projects/videos/dhan.mp4',
+        video: 'https://res.cloudinary.com/dsvsm4qdo/video/upload/q_auto,f_auto,vc_auto/v1753772653/dhan_ouilwc.mp4',
         name: "Dhan",
         description: "A dummy money transfer web app to practice database transactions.",
         repo: "https://github.com/DiwanshuVerma/Dhan",
