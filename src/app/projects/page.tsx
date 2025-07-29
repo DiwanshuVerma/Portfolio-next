@@ -6,36 +6,86 @@ import { ArrowUpRight } from "lucide-react"
 import { motion } from 'framer-motion'
 import Image from "next/image"
 import React, { useEffect, useRef, useState } from "react"
-import { useInView } from "react-intersection-observer"
 
 interface ProjectItemProps {
   project: typeof projects[0]
   index: number
   expandedSkill: { projectIdx: number; skillIdx: number } | null
   toggleSkill: (projectIdx: number, skillIdx: number) => void
-  setVideoRef: (index: number, el: HTMLVideoElement | null) => void
-  onInViewChange: (index: number, inView: boolean) => void
 }
 
 const ProjectItem = React.memo(({
   project,
   index,
   expandedSkill,
-  toggleSkill,
-  setVideoRef,
-  onInViewChange
+  toggleSkill
 }: ProjectItemProps) => {
-  const [ref] = useInView({
-    threshold: 0.5,
-    triggerOnce: false,
-    onChange: (inView) => onInViewChange(index, inView)
-  })
+
+  const videoRef = useRef<HTMLVideoElement | null>(null)
+  const [progress, setProgress] = useState(0);
+  const [showControls, setShowControls] = useState(false);
+  const hideControlsTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  const handleTimeUpdate = () => {
+    const video = videoRef.current;
+    if (video) {
+      const percent = (video.currentTime / video.duration) * 100;
+      setProgress(percent);
+    }
+  };
+
+  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const video = videoRef.current;
+    if (video && video.duration) {
+      const newTime = (parseFloat(e.target.value) / 100) * video.duration;
+      video.currentTime = newTime;
+    }
+  }
+
+  const handleFullScreen = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.requestFullscreen) {
+      video.requestFullscreen();
+    } else if ("webkitRequestFullscreen" in video) {
+      (video as HTMLVideoElement & {
+        webkitRequestFullscreen: () => Promise<void>;
+      }).webkitRequestFullscreen();
+    } else if ("msRequestFullscreen" in video) {
+      (video as HTMLVideoElement & {
+        msRequestFullscreen: () => Promise<void>;
+      }).msRequestFullscreen();
+    }
+  }
+
+  const handleVideoClick = () => {
+    // Toggle controls visibility
+    setShowControls(true);
+
+    // Reset hide timeout
+    if (hideControlsTimeout.current) {
+      clearTimeout(hideControlsTimeout.current);
+    }
+
+    hideControlsTimeout.current = setTimeout(() => {
+      setShowControls(false);
+    }, 3000); // Hide after 3 seconds
+  };
+
+  useEffect(() => {
+    return () => {
+      if (hideControlsTimeout.current) {
+        clearTimeout(hideControlsTimeout.current);
+      }
+    };
+  }, []);
+
 
   return (
     <motion.div
       key={index}
       id={project.id}
-      ref={ref}
       initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -45,18 +95,50 @@ const ProjectItem = React.memo(({
       }}
       className="hover:scale-[101%] duration-300 flex flex-col gap-3 md:gap-4 p-2 md:p-4 shadow-[0px_0px_4px_0px_rgba(125,125,214,0.50)] dark:shadow-[2px_2px_6px_0px_rgba(125,125,214,0.50)] rounded"
     >
-      <video
-        ref={(el) => setVideoRef(index, el)}
-        poster={project.image}
-        muted
-        playsInline
-        preload="auto"
-        loop
-        className="rounded w-full object-cover"
-      >
-        <source src={project.video || undefined} type="video/mp4" />
-        Your browser does not support the video tag
-      </video>
+      <div className="relative group">
+        <video
+          ref={videoRef}
+          poster={project.image}
+          muted
+          playsInline
+          preload="auto"
+          loop
+          autoPlay
+          onTimeUpdate={handleTimeUpdate}
+          onClick={handleVideoClick} // mobile tap
+          className="rounded w-full object-cover"
+        >
+          <source src={project.video || undefined} type="video/mp4" />
+          Your browser does not support the video tag
+        </video>
+
+        {project.video && (
+          <div
+            className={`absolute -bottom-2 left-0 right-0 
+            items-center justify-between px-4 bg-black/40 backdrop-blur-sm transition-opacity
+            ${showControls ? "flex" : "hidden"} 
+            group-hover:flex`}
+          >
+            {/* Progress Bar */}
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={progress}
+              onChange={handleSeek}
+              className="w-full h-[2px] accent-blue-500"
+            />
+            {/* Fullscreen Button */}
+            <button
+              onClick={handleFullScreen}
+              className="ml-2 text-white text-xl font-bold hover:opacity-80"
+              aria-label="Fullscreen"
+            >
+              ⛶
+            </button>
+          </div>
+        )}
+      </div>
 
       <h3 className="text-base">{project.name}</h3>
       <p className="text-sm text-neutral-700 dark:text-neutral-400">{project.description}</p>
@@ -110,77 +192,11 @@ const ProjectItem = React.memo(({
 
 const Projects = () => {
   const [expandedSkill, setExpandedSkill] = useState<{ projectIdx: number; skillIdx: number } | null>(null)
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>([])
-  const timeoutRefs = useRef<(NodeJS.Timeout | null)[]>([])
-  const [inViewStates, setInViewStates] = useState<boolean[]>(Array(projects.length).fill(false))
 
   const toggleSkill = (projectIdx: number, skillIdx: number) => {
     setExpandedSkill({ projectIdx, skillIdx })
     setTimeout(() => setExpandedSkill(null), 3000)
   }
-
-  const setVideoRef = (index: number, el: HTMLVideoElement | null) => {
-    videoRefs.current[index] = el
-  }
-
-  const handleInViewChange = (index: number, inView: boolean) => {
-    setInViewStates(prev => {
-      const newStates = [...prev]
-      newStates[index] = inView
-      return newStates
-    })
-  }
-
-  useEffect(() => {
-    const currentVideoRefs = videoRefs.current
-    const currentTimeoutRefs = timeoutRefs.current
-
-    projects.forEach((_, idx) => {
-      const inView = inViewStates[idx]
-      const video = currentVideoRefs[idx]
-
-      if (inView && video) {
-        currentTimeoutRefs[idx] = setTimeout(() => {
-          // Pause other videos
-          currentVideoRefs.forEach((v, i) => {
-            if (v && i !== idx) {
-              v.pause()
-              v.currentTime = 0
-            }
-          })
-
-          // Check if video is ready before playing
-          if (video.readyState >= 3) {
-            video.play().catch((e) => console.error("Video play failed:", e))
-          } else {
-            video.oncanplay = () => {
-              video.play().catch((e) => console.error("Video play failed after oncanplay:", e))
-            }
-          }
-
-        }, 1000)
-      } else {
-        if (currentTimeoutRefs[idx]) {
-          clearTimeout(currentTimeoutRefs[idx]!)
-          currentTimeoutRefs[idx] = null
-        }
-        if (video) {
-          video.pause()
-          video.currentTime = 0
-        }
-      }
-    })
-
-    return () => {
-      currentTimeoutRefs.forEach((timeout, idx) => {
-        if (timeout) {
-          clearTimeout(timeout)
-          currentTimeoutRefs[idx] = null
-        }
-      })
-    }
-  }, [inViewStates])
-
 
   return (
     <Container className="min-h-screen pt-24 pb-12 px-4 md:px-10">
@@ -194,8 +210,6 @@ const Projects = () => {
             index={idx}
             expandedSkill={expandedSkill}
             toggleSkill={toggleSkill}
-            setVideoRef={setVideoRef}
-            onInViewChange={handleInViewChange}
           />
         ))}
       </div>
