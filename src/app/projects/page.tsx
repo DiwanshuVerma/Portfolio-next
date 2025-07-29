@@ -36,8 +36,8 @@ const ProjectItem = React.memo(({
       key={index}
       id={project.id}
       ref={ref}
-      initial={{ opacity: 0, filter: "blur(5px)", y: 10 }}
-      whileInView={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{
         duration: 0.2,
@@ -50,7 +50,8 @@ const ProjectItem = React.memo(({
         poster={project.image}
         muted
         playsInline
-        preload="none"
+        preload="auto"
+        loop
         className="rounded w-full object-cover"
       >
         <source src={project.video || undefined} type="video/mp4" />
@@ -77,8 +78,8 @@ const ProjectItem = React.memo(({
                 width={20}
                 height={20}
                 className={`shrink-0 w-4 h-4 md:w-5 md:h-5 ${['Express.js', 'Next.js'].includes(skill.name)
-                    ? 'dark:invert'
-                    : ''
+                  ? 'dark:invert'
+                  : ''
                   }`}
               />
               <span
@@ -131,7 +132,6 @@ const Projects = () => {
   }
 
   useEffect(() => {
-    // Store current refs in local variables for cleanup
     const currentVideoRefs = videoRefs.current
     const currentTimeoutRefs = timeoutRefs.current
 
@@ -141,16 +141,29 @@ const Projects = () => {
 
       if (inView && video) {
         currentTimeoutRefs[idx] = setTimeout(() => {
+          // Pause other videos
           currentVideoRefs.forEach((v, i) => {
             if (v && i !== idx) {
               v.pause()
               v.currentTime = 0
             }
           })
-          video.play().catch((e) => console.error("Video play failed:", e))
+
+          // Check if video is ready before playing
+          if (video.readyState >= 3) {
+            video.play().catch((e) => console.error("Video play failed:", e))
+          } else {
+            video.oncanplay = () => {
+              video.play().catch((e) => console.error("Video play failed after oncanplay:", e))
+            }
+          }
+
         }, 1000)
       } else {
-        if (currentTimeoutRefs[idx]) clearTimeout(currentTimeoutRefs[idx]!)
+        if (currentTimeoutRefs[idx]) {
+          clearTimeout(currentTimeoutRefs[idx]!)
+          currentTimeoutRefs[idx] = null
+        }
         if (video) {
           video.pause()
           video.currentTime = 0
@@ -159,11 +172,15 @@ const Projects = () => {
     })
 
     return () => {
-      currentTimeoutRefs.forEach(timeout => {
-        if (timeout) clearTimeout(timeout)
+      currentTimeoutRefs.forEach((timeout, idx) => {
+        if (timeout) {
+          clearTimeout(timeout)
+          currentTimeoutRefs[idx] = null
+        }
       })
     }
   }, [inViewStates])
+
 
   return (
     <Container className="min-h-screen pt-24 pb-12 px-4 md:px-10">
