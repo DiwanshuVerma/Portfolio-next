@@ -14,7 +14,7 @@ const inter = Exo_2({
 
 export const metadata: Metadata = {
   title: "Hi I'm Diwanshu",
-  description: "Portfolio website of Diwanshu Verma which represents his grinds",
+  description: "Portfolio of Diwanshu – Full-Stack Developer showcasing projects, skills, and experience.",
   icons: {
     icon: "/favicon.jpg",
   },
