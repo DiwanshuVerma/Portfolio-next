@@ -6,7 +6,7 @@ export const Container = ({children, className}: {
     className?: string
 }) =>{
     return (
-        <div className={clsx("max-w-4xl w-full bg-white/70 dark:bg-black/70 mx-auto", className)}>
+        <div className={clsx("max-w-4xl w-full bg-white/30 dark:bg-black/20 mx-auto", className)}>
             {children}
         </div>
     )

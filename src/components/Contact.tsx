@@ -52,7 +52,7 @@ export const Contact = () => {
             <div className="space-y-4">
                 <h2 className="mb-4 hidden sm:block text-lg md:text-xl font-medium ">Get in Touch</h2>
                 <div className="text-sm">
-                    If you have any inquiries, please feel free to reach out. <br className="hidden sm:block" />Contact me via email at:
+                    Have a project in mind or just want to say hello? I&apos;d love to hear from you. I&apos;m just a few pixels away:
                     <a href="mailto:diwanshu63019@gmail.com" className="text-indigo-600 block mt-1 w-fit">diwanshu63019@gmail.com</a>
                 </div>
                 <div>
