@@ -89,7 +89,7 @@ const ProjectCard = memo(
                   alt={skill.name}
                   width={20}
                   height={20}
-                  className={`shrink-0 w-4 h-4 md:w-5 md:h-5 ${['Express.js', 'Next.js'].includes(skill.name)
+                  className={`shrink-0 w-4 h-4 md:w-5 md:h-5 ${['Express.js', 'Next.js', 'Vercel'].includes(skill.name)
                       ? 'dark:invert'
                       : ''
                     }`}

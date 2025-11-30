@@ -16,6 +16,8 @@ export const projects = [
             { name: "Node.js", icon: "/icons/nodejs.svg" },
             { name: "Express.js", icon: "/icons/express.svg" },
             { name: "MongoDB", icon: "/icons/mongodb.svg" },
+            { name: "Vercel", icon: "/icons/vercel.svg" },
+            { name: "AWS EC2", icon: "/icons/aws-ec2.svg" }
         ]
     },
     {
