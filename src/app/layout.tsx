@@ -3,7 +3,7 @@ import { Exo_2 } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { AppThemeProvider } from "./provider";
-import DotGrid from "@/components/DotgridBg";
+// import DotGrid from "@/components/DotgridBg";
 import { Footer } from "@/components/Footer";
 import { Analytics } from '@vercel/analytics/next';
 
@@ -43,11 +43,11 @@ export default function RootLayout({
       </head>
 
       <body
-        className={`${inter.className} relative min-h-screen antialiased bg-neutral-100 dark:bg-neutral-700`}>
+        className={`${inter.className} relative min-h-screen antialiased bg-[url(/noisy.png)] dark:bg-[url(/noisy-dark.png)]`}>
         <AppThemeProvider>
 
           {/* dots background */}
-          <div className="fixed inset-0 -z-10 pointer-events-none">
+          {/* <div className="fixed inset-0 -z-10 pointer-events-none">
             <DotGrid
               dotSize={1.5}
               gap={15}
@@ -59,7 +59,7 @@ export default function RootLayout({
               resistance={750}
               returnDuration={1.5}
             />
-          </div>
+          </div> */}
 
           <Navbar />
           {children}

@@ -67,7 +67,6 @@ export const projects = [
             { name: "Next.js", icon: "/icons/nextjs.svg" },
             { name: "Tailwind", icon: "/icons/tailwind.svg" },
             { name: "Motion", icon: "/icons/motion.avif" },
-            { name: "GSAP", icon: "/icons/gsap.svg" },
         ]
     },
     {
