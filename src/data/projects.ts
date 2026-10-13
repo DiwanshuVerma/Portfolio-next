@@ -77,7 +77,7 @@ export const projects = [
         description: "Modern, Sleek, Responsive Web3 landing page.",
         repo: "https://github.com/DiwanshuVerma/Moonex",
         demo: "/projects/#moonex",
-        website: "https://moonex-dv.netlify.app/",
+        website: "https://moonex-omega-three.vercel.app/",
         skills: [
             { name: "React.js", icon: "/icons/react.svg" },
             { name: "Tailwind", icon: "/icons/tailwind.svg" }
