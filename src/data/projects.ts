@@ -28,7 +28,7 @@ export const projects = [
         description: "Helps to manage Campaigns, Collections, Email templates for a Zomato-like platform — Internship task",
         repo: "https://github.com/DiwanshuVerma/Marketing-Dashboard ",
         demo: "/projects/#dashboard",
-        website: "https://olcademy-marketing-dashboard.netlify.app/",
+        website: "https://marketing-dashb1.vercel.app/",
         skills: [
             { name: "React.js", icon: "/icons/react.svg" },
             { name: "Tailwind", icon: "/icons/tailwind.svg" },
@@ -45,7 +45,7 @@ export const projects = [
         description: "A dummy money transfer web app to practice database transactions.",
         repo: "https://github.com/DiwanshuVerma/Dhan",
         demo: "/projects/#dhan",
-        website: "https://dhan-fe.netlify.app/",
+        website: "https://dhan-demo.vercel.app/",
         skills: [
             { name: "React.js", icon: "/icons/react.svg" },
             { name: "Tailwind", icon: "/icons/tailwind.svg" },
